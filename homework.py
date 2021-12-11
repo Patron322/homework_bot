@@ -44,11 +44,12 @@ def send_message(bot, message):
 
 def get_api_answer(current_timestamp):
     """Отправляет запрос к API, возвращает ответ в виде словаря."""
-    timestamp = current_timestamp
-    params = {'from_date': timestamp}
+    params = {'from_date': current_timestamp}
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=params)
-    except Exception as e:
+    except requests.RequestException as e:
+        print(f'Не удалось получить ответ API error: {e}.')
+    except ValueError as e:
         raise logging.error(f'Не удалось получить ответ API error: {e}.')
     response_json = response.json()
     if response.status_code != HTTPStatus.OK:
@@ -70,7 +71,7 @@ def check_response(response):
     """Проверяет ответ API на корректность."""
     if type(response) != dict:
         raise logging.error('TypeError - response API - not dict')
-    if ['homeworks'][0] not in response:
+    if [0][0] not in response:
         logging.error('IndexError - API response not include homework')
     if type(response['homeworks']) != list:
         raise logging.error('TypeError - homework not list')
@@ -105,7 +106,7 @@ def check_tokens():
 
 def main():
     """Основная логика работы бота."""
-    if check_tokens() is True:
+    if check_tokens() is not None:
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
         current_timestamp = TIME_START
     else:
