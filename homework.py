@@ -39,7 +39,7 @@ def send_message(bot, message):
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logging.info('send message')
     except Exception as e:
-        raise logging.error(f'Error: {e} send_message() error')
+        logging.error(f'Error: {e} send_message() error')
 
 
 def get_api_answer(current_timestamp):
@@ -48,9 +48,9 @@ def get_api_answer(current_timestamp):
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=params)
     except requests.RequestException as e:
-        print(f'Не удалось получить ответ API error: {e}.')
+        logging.error = (f'Не удалось получить ответ API error: {e}.')
     except ValueError as e:
-        raise logging.error(f'Не удалось получить ответ API error: {e}.')
+        logging.error = (f'Не удалось получить ответ API error: {e}.')
     response_json = response.json()
     if response.status_code != HTTPStatus.OK:
         resp_s_c = response.status_code
@@ -71,10 +71,10 @@ def check_response(response):
     """Проверяет ответ API на корректность."""
     if type(response) != dict:
         raise logging.error('TypeError - response API - not dict')
-    if [0][0] not in response:
+    if [0][0] in response:
         logging.error('IndexError - API response not include homework')
     if type(response['homeworks']) != list:
-        raise logging.error('TypeError - homework not list')
+        raise TypeError(' - homework not list')
     return response.get('homeworks')
 
 
@@ -83,7 +83,7 @@ def parse_status(homework):
     homework_name = homework.get('homework_name')
     homework_status = homework.get('status')
     if type(homework_name) is None:
-        raise logging.error('Homework_name is None.')
+        TypeError('homework_name is None.')
     if homework_status not in HOMEWORK_STATUSES.keys():
         logging.error(f'Unknown homework_status: {homework_status}.')
     verdict = HOMEWORK_STATUSES[homework_status]
@@ -106,11 +106,11 @@ def check_tokens():
 
 def main():
     """Основная логика работы бота."""
-    if check_tokens() is not None:
+    if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
         current_timestamp = TIME_START
     else:
-        raise
+        raise logging.error('error check_tokens in main')
     while True:
         try:
             response = get_api_answer(current_timestamp)  # dict
