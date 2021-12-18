@@ -19,7 +19,7 @@ logging.basicConfig(
 PRACTICUM_TOKEN = os.environ.get('PRACTICUM_TOKEN')
 TELEGRAM_TOKEN = os.environ.get('TELEGRAM_TOKEN')
 TELEGRAM_CHAT_ID = os.environ.get('TELEGRAM_CHAT_ID')
-TIME_START = 1639229780
+TIME_START = int(time.time())
 RETRY_TIME = 600
 ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
