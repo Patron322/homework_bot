@@ -42,6 +42,12 @@ def send_message(bot, message):
         logging.error(f'Error: {e} send_message() error')
 
 
+def start_message(bot, message):
+    '''Стартовое сообщение'''
+    message = 'Бот запущен'
+    bot.send_message(TELEGRAM_CHAT_ID, message)
+
+
 def get_api_answer(current_timestamp):
     """Отправляет запрос к API, возвращает ответ в виде словаря."""
     params = {'from_date': current_timestamp}
@@ -109,6 +115,8 @@ def main():
     if check_tokens():
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
         current_timestamp = TIME_START
+        message = 'Бот запущен'
+        start_message(bot, message)
     else:
         raise logging.error('error check_tokens in main')
     while True:
