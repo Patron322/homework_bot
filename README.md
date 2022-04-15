@@ -1,12 +1,12 @@
-# homework_bot
+ homework_bot
 
-#Как запустить проект:
+Как запустить проект:
 
-#Cоздать и активировать виртуальное окружение:
+Cоздать и активировать виртуальное окружение:
     python -m venv venv
     .\venv\Scripts\Activate.ps1
 
-#Установить зависимости из файла requirements.txt:
+Установить зависимости из файла requirements.txt:
 
     python -m pip install —upgrade pip
     pip install -r requirements.txt
